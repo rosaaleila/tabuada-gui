@@ -2,31 +2,22 @@ package br.senai.sp.jandira.ui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Array;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Map;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.Scrollable;
-
-import br.senai.sp.jandira.model.Calculadora;
+import br.senai.sp.jandira.model.Tabuada;
 
 public class Tela {
 	public void criarTela() {
+		
+		// chamando metodos necessarios para as operacoes
+		Tabuada valoresTabuada = new Tabuada();
 		
 		// formatando
 		JFrame minhaTela = new JFrame();
@@ -75,14 +66,18 @@ public class Tela {
 		
 		JLabel lblResultado = new JLabel();
 		lblResultado.setText("Resultado:");
-		lblResultado.setBounds(290, 65, 80, 30);
+		lblResultado.setBounds(290, 45, 80, 30);
 		
-		Calculadora valores = new Calculadora();
-		DefaultListModel<String> complementos = new DefaultListModel<>();
-		JList<String> lsOperacoes = new JList<String>(complementos);
+		// criando o scrollpane
+		JScrollPane scrBarraDeRolagem = new JScrollPane();
+		scrBarraDeRolagem.setBounds(290, 70, 150, 230);
 		
-		JScrollPane scrBarra = new JScrollPane(lsOperacoes);
-		scrBarra.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		// definindo o model da lista
+		DefaultListModel<String> modelListaOperacoes = new DefaultListModel<String>();
+		
+		//criando lista e a colocando no scrollpane
+		JList<String> lsResultadoOperacoes = new JList<String>(modelListaOperacoes);
+		scrBarraDeRolagem.getViewport().add(lsResultadoOperacoes);
 
 		// colocar componentes na tela
 		minhaTela.getContentPane().add(lblTitulo);
@@ -93,26 +88,22 @@ public class Tela {
 		minhaTela.getContentPane().add(lblResultado);
 		minhaTela.getContentPane().add(txtMultiplicando);
 		minhaTela.getContentPane().add(txtMultiplicador);
-		minhaTela.getContentPane().add(lsOperacoes);
-		minhaTela.getContentPane().add(scrBarra);
+		minhaTela.getContentPane().add(scrBarraDeRolagem);
 		
 		//acoes botoes
 		btnCalcular.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				valoresTabuada.setMultiplicando(txtMultiplicando.getText()); // definindo o valor do multiplicando
+				int multiplicando = valoresTabuada.getMultiplicando(); // atribuindo o valor a uma variavel
 				
-				valores.setMultiplicando(txtMultiplicando.getText());
-				valores.setMultiplicador(txtMultiplicador.getText());
+				valoresTabuada.setMultiplicador(txtMultiplicador.getText()); // definindo o valor do multiplicador
+				int maximoMultiplicador = valoresTabuada.getMultiplicador(); // atribuindo o valor para uma variavel				
 				
-				for (int contador = 0; contador <= valores.getMultiplicador(); contador++) {
-					valores.calcular(contador);
-					complementos.addElement(valores.getMultiplicando() + " * " + contador + " = " + valores.getResultado());
+				for (int contador = 0; contador <= maximoMultiplicador; contador++) {
+					modelListaOperacoes.addElement(multiplicando + " x " + contador + " = " + valoresTabuada.calcular(contador)); // o metodo calcular devolve o resultado da multiplicacao
 				}
-
-				lsOperacoes.setBounds(290, 100, 160, 200);
-				
-				
 			}
 		});
 		
@@ -120,7 +111,8 @@ public class Tela {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				complementos.clear();
+				// limpar tela
+				modelListaOperacoes.clear();
 				
 			}
 		});
