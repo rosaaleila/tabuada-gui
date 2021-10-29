@@ -31,7 +31,7 @@ public class Tela {
 		JLabel lblTitulo = new JLabel();
 		lblTitulo.setText("Tabuada");
 		lblTitulo.setBounds(30, 10, 500, 50);
-		lblTitulo.setForeground(Color.blue);
+		lblTitulo.setForeground(Color.BLUE);
 		lblTitulo.setFont(new Font("", Font.BOLD, 20));
 		
 		JLabel lblMultiplicando = new JLabel();
@@ -53,24 +53,25 @@ public class Tela {
 		JButton btnCalcular = new JButton();
 		btnCalcular.setText("Calcular");
 		btnCalcular.setFont(new Font("", Font.BOLD, 19));
-		btnCalcular.setForeground(Color.white);
-		btnCalcular.setBackground(Color.green);
+		btnCalcular.setForeground(Color.WHITE);
+		btnCalcular.setBackground(Color.GREEN);
 		btnCalcular.setBounds(30, 180, 210, 50);
 		
 		JButton btnLimpar = new JButton();
 		btnLimpar.setText("Limpar");
 		btnLimpar.setFont(new Font("", Font.BOLD, 19));
-		btnLimpar.setForeground(Color.white);
-		btnLimpar.setBackground(Color.red);
+		btnLimpar.setForeground(Color.WHITE);
+		btnLimpar.setBackground(Color.RED);
 		btnLimpar.setBounds(30, 250, 210, 50);
 		
 		JLabel lblResultado = new JLabel();
 		lblResultado.setText("Resultado:");
-		lblResultado.setBounds(290, 45, 80, 30);
+		lblResultado.setBounds(290, 60, 80, 30);
+		lblResultado.setForeground(Color.BLUE);
 		
 		// criando o scrollpane
 		JScrollPane scrBarraDeRolagem = new JScrollPane();
-		scrBarraDeRolagem.setBounds(290, 70, 150, 230);
+		scrBarraDeRolagem.setBounds(290, 90, 150, 210);
 		
 		// definindo o model da lista
 		DefaultListModel<String> modelListaOperacoes = new DefaultListModel<String>();
@@ -102,7 +103,9 @@ public class Tela {
 				int maximoMultiplicador = valoresTabuada.getMultiplicador(); // atribuindo o valor para uma variavel				
 				
 				for (int contador = 0; contador <= maximoMultiplicador; contador++) {
-					modelListaOperacoes.addElement(multiplicando + " x " + contador + " = " + valoresTabuada.calcular(contador)); // o metodo calcular devolve o resultado da multiplicacao
+					int resultado = valoresTabuada.calcular(contador); // atribuindo resultado (retornado pelo calcular)
+					modelListaOperacoes.addElement(multiplicando + " x " + contador + " = " + resultado);
+					// adicionar e exibir as contas exigidas no model
 				}
 			}
 		});
@@ -112,7 +115,7 @@ public class Tela {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// limpar tela
-				modelListaOperacoes.clear();
+				modelListaOperacoes.removeAllElements();
 				
 			}
 		});
