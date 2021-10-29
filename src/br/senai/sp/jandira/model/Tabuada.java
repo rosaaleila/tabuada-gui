@@ -23,9 +23,9 @@ public class Tabuada {
 		return multiplicador;
 	}
 	
-	public int calcular(int maxMultiplicador) {
+	public int calcular(int multiplicador) {
 		//retornar o resultado da operacao
-		return multiplicando * maxMultiplicador;
+		return multiplicando * 	multiplicador;
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +19,7 @@ public class Tela {
 		
 		// chamando metodos necessarios para as operacoes
 		Tabuada valoresTabuada = new Tabuada();
+		ImageIcon iconCalculadora = new ImageIcon((getClass().getResource("/br/senai/sp/jandira/imgs/calculadora.png")));
 		
 		// formatando
 		JFrame minhaTela = new JFrame();
@@ -33,6 +35,10 @@ public class Tela {
 		lblTitulo.setBounds(30, 10, 500, 50);
 		lblTitulo.setForeground(Color.BLUE);
 		lblTitulo.setFont(new Font("", Font.BOLD, 20));
+		
+		JLabel lblIcon = new JLabel();
+		lblIcon.setIcon(iconCalculadora);
+		lblIcon.setBounds(400, 10, 64, 64);
 		
 		JLabel lblMultiplicando = new JLabel();
 		lblMultiplicando.setText("Multiplicando:");
@@ -82,6 +88,7 @@ public class Tela {
 
 		// colocar componentes na tela
 		minhaTela.getContentPane().add(lblTitulo);
+		minhaTela.getContentPane().add(lblIcon);
 		minhaTela.getContentPane().add(lblMultiplicando);
 		minhaTela.getContentPane().add(lblMultiplicador);
 		minhaTela.getContentPane().add(btnCalcular);
@@ -114,9 +121,10 @@ public class Tela {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// limpar tela
-				modelListaOperacoes.removeAllElements();
-				
+				modelListaOperacoes.removeAllElements(); // limpa a tela
+				txtMultiplicando.requestFocus(); // traz o foco para o txtfield
+				txtMultiplicando.setText(""); // limpa o txtfield
+				txtMultiplicador.setText(""); // limpa o txtfield
 			}
 		});
 		
